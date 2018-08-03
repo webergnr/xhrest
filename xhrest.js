@@ -1,4 +1,4 @@
-var XHRest = (() => {
+var XHRest = (()=>{
     "use strict";
 
     function XHRest (url, settings = {}) {
@@ -12,7 +12,6 @@ var XHRest = (() => {
 
     XHRest.prototype.post = function (request, customUrl = "", customHeaders = {}) {
 
-        //Default Headers - Post Request
         var defaultPostHeaders = {
             "Content-type": "application/x-www-form-urlencoded"
         }
@@ -72,7 +71,6 @@ var XHRest = (() => {
 
     XHRest.prototype.get = function (request = false, customHeaders = {}) {
 
-        //Default Headers - Post Request
         var defaultPostHeaders = {
             "Content-type": "application/x-www-form-urlencoded"
         }
@@ -141,7 +139,6 @@ var XHRest = (() => {
 
     XHRest.prototype.put = function (request, customUrl = "", customHeaders = {}) {
 
-        //Default Headers - Post Request
         var defaultPostHeaders = {
             "Content-type": "application/x-www-form-urlencoded"
         }
@@ -204,7 +201,6 @@ var XHRest = (() => {
 
     XHRest.prototype.patch = function (request, customUrl = "", customHeaders = {}) {
 
-        //Default Headers - Post Request
         var defaultPostHeaders = {
             "Content-type": "application/x-www-form-urlencoded"
         }
@@ -267,7 +263,6 @@ var XHRest = (() => {
 
     XHRest.prototype.delete = function (request, customUrl = "", customHeaders = {}) {
 
-        //Default Headers - Post Request
         var defaultPostHeaders = {
             "Content-type": "application/x-www-form-urlencoded"
         }

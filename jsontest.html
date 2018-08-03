@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Json Example</title>
+</head>
+<body>
+	
+	<script src="xhrest.js"></script>
+	
+	<script>
+
+		//Site with a Rest API example.
+		var api_url = 'https://jsonplaceholder.typicode.com';
+		
+		var posts 	= new XHRest(api_url, {endpoint: '/users'});
+		var photos 	= new XHRest(api_url, {endpoint: '/photos'});
+
+		//this test is not in the same domain so an "OPTION" request will be sent first asking the allowed methods.
+
+		var readPosts 	= posts.get();
+		var readPost 	= posts.get("1");
+		var postPost 	= posts.post({test: 'test'});
+		var putPost 	= posts.put({test: 'test'}, '/1');
+		var patchPost 	= posts.patch({test: 'test'}, '/1');
+		var deletePost 	= posts.delete('1');
+
+
+		var readPhoto 	= photos.get();
+		var readPhoto 	= photos.get("1");
+		var postPhoto 	= photos.post({test: 'test'});
+		var putPhoto 	= photos.put({test: 'test'}, '/1');
+		var patchPhoto 	= photos.patch({test: 'test'}, '/1');
+		var deletePhoto = photos.delete('1');
+
+
+	</script>
+
+</body>
+</html>

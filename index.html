@@ -2,10 +2,65 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>XHRest !</title>
+	<title>XHRest With Jquery!</title>
 </head>
 <body>
-	
+
+	Example -> get JWT:
+
+	<hr>
+
+	Email: <input type="text" id="txt_email"> <br>
+	Pass: <input type="password" id="txt_pass"> <br>
+
+	<button id="btn_login">Login</button>
+	<br>
+	<br>
+	<button id="btn_readinfo">Read</button>
+	<br>
+	<div id="display"></div>
+
 	<script src="xhrest.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	
+	<script>
+		var api_url = "http://localhost/xhrest/api";
+		var token = "";
+
+		$(function() {
+
+
+			//Login button
+			$(document).on('click', '#btn_login', function() {
+
+				var auth = new XHRest(api_url, {endpoint: "/auth"});				
+				
+				token = auth.post({
+					email: 'test@test.com',
+					senha: '123'
+				}, '/login').json.token;
+				
+				console.log(token);
+
+			});
+
+			//Read info button
+			$(document).on('click', '#btn_readinfo', function() {
+
+				var info = new XHRest(api_url, {endpoint: "/info", token: token});
+				
+				info = info.get('1').json;
+				
+				$("#display").html(
+					info.title
+				);
+
+			});			
+
+
+
+		});
+	</script>
+
 </body>
 </html>
