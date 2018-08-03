@@ -10,7 +10,7 @@ var XHRest = (() => {
         this.callback = (settings.hasOwnProperty('callback')) ? settings.callback : false ;        
     };
 
-    XHRest.prototype.post = function (request, customHeaders = {}) {
+    XHRest.prototype.post = function (request, customUrl = "", customHeaders = {}) {
 
         //Default Headers - Post Request
         var defaultPostHeaders = {
@@ -31,7 +31,7 @@ var XHRest = (() => {
         }
 
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', this.url + this.endpoint, this.async);
+        xhr.open('POST', this.url + this.endpoint + customUrl, this.async);
 
         //Heders overwrite (custom headers)
         for (let customHeader in customHeaders){
@@ -139,7 +139,7 @@ var XHRest = (() => {
         return response;
     };
 
-    XHRest.prototype.put = function (request, customHeaders = {}) {
+    XHRest.prototype.put = function (request, customUrl = "", customHeaders = {}) {
 
         //Default Headers - Post Request
         var defaultPostHeaders = {
@@ -160,7 +160,7 @@ var XHRest = (() => {
         }
 
         var xhr = new XMLHttpRequest();
-        xhr.open('PUT', this.url + this.endpoint, this.async);
+        xhr.open('PUT', this.url + this.endpoint + customUrl, this.async);
 
         //Heders overwrite (custom headers)
         for (let customHeader in customHeaders){
@@ -202,7 +202,7 @@ var XHRest = (() => {
         return response;
     };
 
-    XHRest.prototype.patch = function (request, customHeaders = {}) {
+    XHRest.prototype.patch = function (request, customUrl = "", customHeaders = {}) {
 
         //Default Headers - Post Request
         var defaultPostHeaders = {
@@ -223,7 +223,7 @@ var XHRest = (() => {
         }
 
         var xhr = new XMLHttpRequest();
-        xhr.open('PATCH', this.url + this.endpoint, this.async);
+        xhr.open('PATCH', this.url + this.endpoint + customUrl, this.async);
 
         //Heders overwrite (custom headers)
         for (let customHeader in customHeaders){
@@ -265,7 +265,7 @@ var XHRest = (() => {
         return response;
     };
 
-    XHRest.prototype.delete = function (request, customHeaders = {}) {
+    XHRest.prototype.delete = function (request, customUrl = "", customHeaders = {}) {
 
         //Default Headers - Post Request
         var defaultPostHeaders = {
@@ -276,17 +276,26 @@ var XHRest = (() => {
             defaultPostHeaders['Authorization'] = "Bearer " + this.token;
         }
 
-        var fd = "";
+        var rqUrl = "";
 
-        for (let key in request) {
-            if (fd != "") {
-                fd += "&";
+        if (typeof(request) === 'object') {
+            for (let key in request) {
+                if (rqUrl != "") {
+                    rqUrl += "&";
+                }
+                rqUrl += key + "=" + encodeURIComponent(request[key]);
             }
-            fd += key + "=" + encodeURIComponent(request[key]);
+        } else if(typeof(request) === 'string'){
+            rqUrl += "/" + encodeURIComponent(request);
         }
 
         var xhr = new XMLHttpRequest();
-        xhr.open('DELETE', this.url + this.endpoint, this.async);
+
+        if (typeof(request) === "object") {
+            xhr.open('DELETE', this.url + this.endpoint + customUrl, this.async);
+        } else{
+            xhr.open('DELETE', this.url + this.endpoint + customUrl + rqUrl, this.async);
+        }
 
         //Heders overwrite (custom headers)
         for (let customHeader in customHeaders){
@@ -323,7 +332,11 @@ var XHRest = (() => {
             }
         }
 
-        xhr.send(fd);
+        if (typeof(request) === "object") {
+            xhr.send(rqUrl);
+        }else{
+            xhr.send();
+        }
 
         return response;
     };
