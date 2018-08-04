@@ -81,7 +81,7 @@ var x = new XHRest (String url [, Object settings]);
 ####    example with JQuery Library
 ```js
 var api_url = "http://localhost/api"
-var product = new XHRest(api_url, {endpoint: "product"});
+var product = new XHRest(api_url, {endpoint: "/product"});
 
 $(function() {
 	$(document).on('click', '#button_create', function () {
@@ -104,7 +104,7 @@ $(function() {
 ### XHRest callbacks:
 
 ```js
-var x = new XHRest("http://localhost/api/", {
+var x = new XHRest("http://localhost/api", {
 	endpoint: '/Client', 
 	async: true,
 	callback: 'myFunc'
